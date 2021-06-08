@@ -22,15 +22,14 @@ public class EatPlayer : MonoBehaviour
        
            if(col.gameObject.tag == "Player")
         {
-     
+            Application.Quit();
             Destroy(col.gameObject);
+            
         }
         }
      
 
     }
-
-
 
     // Update is called once per frame
     void Update()

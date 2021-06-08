@@ -6,9 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Background.unity
+    guid: cc571d90541c2554ab7f5e5a5ec8d2df
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Ceara.unity
     guid: 051465cbbb34e424ca6f1865ae7a1ea8
+  - enabled: 1
+    path: Assets/Scenes/Brasil.unity
+    guid: 98abbe5e208294041956a368f61c5578
+  - enabled: 1
+    path: Assets/Scenes/Mundo.unity
+    guid: e66ec24f6aa2e224882644a682e244cc
   m_configObjects: {}

@@ -1,69 +1,528 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Timers;
 
 public class RandomSpawn : MonoBehaviour
 {
     public GameObject Food;
     public float vel;
+    public float velItens;
+    
+    public GameObject alcool;
+    public GameObject ambulance;
+    public GameObject elmo;
+    public GameObject eva;
+    public GameObject faceShield;
+    public GameObject mask1;
+    public GameObject mask2;
+    public GameObject respirador;
+    public GameObject Vacina1;
+    public GameObject Vacina2;
+
+    private string sceneName;
+    public GameObject mapa;
+    private static System.Timers.Timer aTimer;
+    public float timeRemaining = 20;
+    private bool spawnVacina1 = false;
+    private bool spawnVacina2 = false;
     private Vector3 scaleChange;
-    private Transform playerPos;
+    Vector2 pos;
 
 
     void FoodGenerate()
     {
-        int x = Random.Range(0, Camera.main.pixelWidth);
-        int y = Random.Range(0, Camera.main.pixelHeight);
-  Vector3 Target = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
-Debug.Log("pos player = " + playerPos.position);
-Debug.Log("pos inimigo = " + Target);
-Debug.Log("distancia entre os dois = " + Vector3.Distance(Target, playerPos.position));
-if(Vector3.Distance(Target, playerPos.position) > 10){
-    Vector3 newTarget = Camera.main.ScreenToWorldPoint(new Vector3(x + 500, y + 500, 0));
-        Target.z = 0;
-Debug.Log("Perto " + "pos antiga  = " + Target);
-Debug.Log("Perto " + "pos nova   = " +  newTarget);
-        float tam = Random.Range(0, 1f);
-        
+       MeshCollider c = mapa.GetComponent<MeshCollider>();
+       float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+       float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
 
-        scaleChange = new Vector3(tam, tam, 0);
-        Food.transform.localScale +=  scaleChange;
-        
+       pos = new Vector2(x,y);
+
+       float tam = Random.Range(0, 0.5f);
        
+       scaleChange = new Vector3(tam, tam, 0);
+       Food.transform.localScale +=  scaleChange;
 
 
-            Instantiate(Food, newTarget, Quaternion.identity);
-    
-}else{
-        Target.z = 0;
-Debug.Log("Longe: ");
-        float tam = Random.Range(0, 1f);
-        
+       Instantiate(Food, pos, Quaternion.identity);
+            
+    }
 
-        scaleChange = new Vector3(tam, tam, 0);
-        Food.transform.localScale +=  scaleChange;
-        
+
+    void SpawnItens(){
+       var i = 0;
+
+       while(i<10){
        
-
-
-            Instantiate(Food, Target, Quaternion.identity);
+       if(sceneName == "SampleScene"){
     
+              if(i == 0){  //alcool
+              var a = 0;
+                     while(a < 4){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+                   
+
+                     Instantiate(alcool, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 1){    //ambulance
+                     int num = Random.Range(0, 5);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+
+                     Instantiate(ambulance, pos, Quaternion.identity);   
+              }
+       }else if(i == 3){ // eva
+                     int num = Random.Range(0, 15);
+                     Debug.Log(num);
+                     
+                     if(num == 1){
+                   
+                      MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(eva, pos, Quaternion.identity);
+              }
+
+              }else if(i == 4){ //faceShield
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(faceShield, pos, Quaternion.identity);
+              }else if(i == 5){ // mask 1 
+                     var a = 0;
+                     while(a < 4){
+                    MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask1, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 6){ // mask 2
+                     var a = 0;
+                     while(a < 2){
+                  MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask2, pos, Quaternion.identity);
+                     a++;
+              }
+
+              }else if(i == 7){ //respirador
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(respirador, pos, Quaternion.identity);
+
+              }
+              }else if(sceneName == "Ceara"){
+if(i == 0){  //alcool
+              var a = 0;
+                     while(a < 5){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+                   
+
+                     Instantiate(alcool, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 1){    //ambulance
+                     int num = Random.Range(0, 5);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+
+                     Instantiate(ambulance, pos, Quaternion.identity);   
+              }
+
+              }else if(i == 2){ //elmo
+//botar pra spawnar e olhe la
+                     int num = Random.Range(0, 100);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(elmo, pos, Quaternion.identity);
+              }
+
+              }else if(i == 3){ // eva
+                     int num = Random.Range(0, 15);
+                     Debug.Log(num);
+                     
+                     if(num == 1){
+                   
+                      MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(eva, pos, Quaternion.identity);
+              }
+
+              }else if(i == 4){ //faceShield
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(faceShield, pos, Quaternion.identity);
+              }else if(i == 5){ // mask 1 
+                     var a = 0;
+                     while(a < 6){
+                    MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask1, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 6){ // mask 2
+                     var a = 0;
+                     while(a < 4){
+                  MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask2, pos, Quaternion.identity);
+                     a++;
+              }
+
+              }else if(i == 7){ //respirador
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(respirador, pos, Quaternion.identity);
+
+              }else if(i == 8){//vacina 1 dps ver um jeito legal de spawnar ela
+                   
+                    
+
+              }
+
+              }else if(sceneName == "Brasil"){
+
+if(i == 0){  //alcool
+              var a = 0;
+                     while(a < 5){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+                   
+
+                     Instantiate(alcool, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 1){    //ambulance
+                     int num = Random.Range(0, 5);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+
+                     Instantiate(ambulance, pos, Quaternion.identity);   
+              }
+
+              }else if(i == 2){ //elmo
+//botar pra spawnar e olhe la
+                     int num = Random.Range(0, 100);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(elmo, pos, Quaternion.identity);
+              }
+
+              }else if(i == 3){ // eva
+                     int num = Random.Range(0, 15);
+                     Debug.Log(num);
+                     
+                     if(num == 1){
+                   
+                      MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(eva, pos, Quaternion.identity);
+              }
+
+              }else if(i == 4){ //faceShield
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(faceShield, pos, Quaternion.identity);
+              }else if(i == 5){ // mask 1 
+                     var a = 0;
+                     while(a < 6){
+                    MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask1, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 6){ // mask 2
+                     var a = 0;
+                     while(a < 4){
+                  MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask2, pos, Quaternion.identity);
+                     a++;
+              }
+
+              }else if(i == 7){ //respirador
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(respirador, pos, Quaternion.identity);
+
+              }else if(i == 8){//vacina 2 dps ver um jeito legal de spawnar ela
+                      
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(Vacina2, pos, Quaternion.identity);
+
+
+              }
+              }else if(sceneName == "Mundi"){
+
+if(i == 0){  //alcool
+              var a = 0;
+                     while(a < 5){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+                   
+
+                     Instantiate(alcool, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 1){    //ambulance
+                     int num = Random.Range(0, 5);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+
+                     Instantiate(ambulance, pos, Quaternion.identity);   
+              }
+
+              }else if(i == 2){ //elmo
+//botar pra spawnar e olhe la
+                     int num = Random.Range(0, 100);
+                     Debug.Log(num);
+                     if(num == 1){
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(elmo, pos, Quaternion.identity);
+              }
+
+              }else if(i == 3){ // eva
+                     int num = Random.Range(0, 15);
+                     Debug.Log(num);
+                     
+                     if(num == 1){
+                   
+                      MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(eva, pos, Quaternion.identity);
+              }
+
+              }else if(i == 4){ //faceShield
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(faceShield, pos, Quaternion.identity);
+              }else if(i == 5){ // mask 1 
+                     var a = 0;
+                     while(a < 6){
+                    MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask1, pos, Quaternion.identity);
+                     a++;
+                     }
+              }else if(i == 6){ // mask 2
+                     var a = 0;
+                     while(a < 4){
+                  MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(mask2, pos, Quaternion.identity);
+                     a++;
+              }
+
+              }else if(i == 7){ //respirador
+                     MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(respirador, pos, Quaternion.identity);
+
+              }
+              }
+
+
+              i++;
+
+       }
+
+
+
+
 }
-        
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
- playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+              // Start is called before the first frame update
+              void Start()
+              {
+                     Scene currentScene = SceneManager.GetActiveScene();
+                     sceneName = currentScene.name;   
+                     Vacina1.SetActive(false);
+               //      SpawnItens();
+                     InvokeRepeating("FoodGenerate", 2, vel);
+                     InvokeRepeating("SpawnItens", 2, velItens);
+}
 
-                InvokeRepeating("FoodGenerate", 1, vel);
-         
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
+
+
+              // Update is called once per frame
+              void Update()
+              {
+                     
+                     if(sceneName == "Ceara"){
+                          if(timeRemaining > 0){
+                            timeRemaining -= Time.deltaTime;
+                            Debug.Log("timer = " +timeRemaining);
+                      }else{
+                            if(spawnVacina1 == false){
+   
+
+     Vacina1.SetActive(true);
+
+                     spawnVacina1 = true;
+                            }
+                  
+                      }   
+                     }else if(sceneName == "Brasil"){
+                                 if(timeRemaining > 0){
+                            timeRemaining -= Time.deltaTime;
+                            Debug.Log("timer = " + timeRemaining);
+                      }else{
+                            if(spawnVacina2 == false){
+                                    MeshCollider c = mapa.GetComponent<MeshCollider>();
+                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
+                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
+
+                     pos = new Vector2(x,y);
+
+                     Instantiate(Vacina2, pos, Quaternion.identity);      
+                     spawnVacina2 = true;
+                            }
+                  
+                      }   
+                     }
+             
+}
+
 }
