@@ -24,7 +24,8 @@ public class RandomSpawn : MonoBehaviour
     private string sceneName;
     public GameObject mapa;
     private static System.Timers.Timer aTimer;
-    public float timeRemaining = 20;
+    public float timeRemainingCeara = 30;
+    public float timeRemainingBR = 40;
     private bool spawnVacina1 = false;
     private bool spawnVacina2 = false;
     private Vector3 scaleChange;
@@ -55,7 +56,7 @@ public class RandomSpawn : MonoBehaviour
 
        while(i<10){
        
-       if(sceneName == "SampleScene"){
+       if(sceneName == "Fortaleza"){
     
               if(i == 0){  //alcool
               var a = 0;
@@ -262,7 +263,7 @@ if(i == 0){  //alcool
                      a++;
                      }
               }else if(i == 1){    //ambulance
-                     int num = Random.Range(0, 5);
+                     int num = Random.Range(0, 2);
                      Debug.Log(num);
                      if(num == 1){
                      MeshCollider c = mapa.GetComponent<MeshCollider>();
@@ -346,19 +347,8 @@ if(i == 0){  //alcool
 
                      Instantiate(respirador, pos, Quaternion.identity);
 
-              }else if(i == 8){//vacina 2 dps ver um jeito legal de spawnar ela
-                      
-                     MeshCollider c = mapa.GetComponent<MeshCollider>();
-                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
-                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
-
-                     pos = new Vector2(x,y);
-
-                     Instantiate(Vacina2, pos, Quaternion.identity);
-
-
               }
-              }else if(sceneName == "Mundi"){
+              }else if(sceneName == "Mundo"){
 
 if(i == 0){  //alcool
               var a = 0;
@@ -477,7 +467,8 @@ if(i == 0){  //alcool
                      Scene currentScene = SceneManager.GetActiveScene();
                      sceneName = currentScene.name;   
                      Vacina1.SetActive(false);
-               //      SpawnItens();
+                     Vacina2.SetActive(false);
+                     //SpawnItens();
                      InvokeRepeating("FoodGenerate", 2, vel);
                      InvokeRepeating("SpawnItens", 2, velItens);
 }
@@ -491,33 +482,27 @@ if(i == 0){  //alcool
               {
                      
                      if(sceneName == "Ceara"){
-                          if(timeRemaining > 0){
-                            timeRemaining -= Time.deltaTime;
-                            Debug.Log("timer = " +timeRemaining);
+                          if(timeRemainingCeara > 0){
+                            timeRemainingCeara -= Time.deltaTime;
+                            Debug.Log("timer = " +timeRemainingCeara);
                       }else{
                             if(spawnVacina1 == false){
    
 
-     Vacina1.SetActive(true);
+                    Vacina1.SetActive(true);
 
                      spawnVacina1 = true;
                             }
                   
                       }   
                      }else if(sceneName == "Brasil"){
-                                 if(timeRemaining > 0){
-                            timeRemaining -= Time.deltaTime;
-                            Debug.Log("timer = " + timeRemaining);
+                                 if(timeRemainingBR > 0){
+                            timeRemainingBR -= Time.deltaTime;
+                            Debug.Log("timer = " + timeRemainingBR);
                       }else{
                             if(spawnVacina2 == false){
-                                    MeshCollider c = mapa.GetComponent<MeshCollider>();
-                     float x = Random.Range(c.bounds.min.x, c.bounds.max.x); 
-                     float y = Random.Range(c.bounds.min.y, c.bounds.max.y);
-
-                     pos = new Vector2(x,y);
-
-                     Instantiate(Vacina2, pos, Quaternion.identity);      
-                     spawnVacina2 = true;
+                              Vacina2.SetActive(true);     
+                              spawnVacina2 = true;
                             }
                   
                       }   
